@@ -1,13 +1,20 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar";
+import { useMoviesStore } from "../store/movies/useMovieStore";
 import { useEffect } from "react";
-import { getPopularMovies } from "../service/api.service";
 
 const RootLayout = () => {
+  const movies = useMoviesStore((state) => state.popularMovies);
+  const fetchPopularMovies = useMoviesStore(
+    (state) => state.actions.fetchPopularMovies,
+  );
+
   useEffect(() => {
-    const movies = getPopularMovies();
-    console.log(movies);
-  }, []);
+    fetchPopularMovies();
+  }, [fetchPopularMovies]);
+
+  console.log(movies);
+
   return (
     <>
       <NavBar />
